@@ -10,7 +10,7 @@ namespace Dining_philosophers
     {
         private int iD;
         private Fork leftFork, rightFork;
-        private int eat = 1500;
+        private int eat = 1000;
         private int thought = 3000;
 
         public Philosophers(int id, Fork left, Fork right)

@@ -8,11 +8,13 @@ namespace Dining_philosophers
 {
     class Manager
     {
+        //variables
         private static int amoun = 5;
         private Thread[] threads = new Thread[amoun];
         private List<Philosophers> phil = new List<Philosophers>();
         private List<Fork> forks = new List<Fork>();
-        public void CreateSimulationOfDining()
+
+        public void CreateSimulationOfDining() // creates forks and philosophers and binds forks to philosophers
         {
             for (int i = 0; i < 5; i++)
             {
@@ -31,16 +33,16 @@ namespace Dining_philosophers
             }
         }
 
-        public void reserveThreads()
+        public void reserveThreads()//reserve up threads
         {
             for (int i = 0; i < amoun; i++)
             {
-                Thread t = new Thread(phil[i].Eat);
+                Thread t = new Thread(phil[i].philEat);
                 threads[i] = t;
             }
         }
 
-        public void startsim()
+        public void startsim() // starts threads with simulation
         {
             for (int i = 0; i < threads.Length; i++)
             {

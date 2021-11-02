@@ -8,36 +8,45 @@ namespace Dining_philosophers
 {
     class Philosophers
     {
+        //variables
         private int iD;
-        private Fork leftFork, rightFork;
         private int eat = 1000;
         private int thought = 3000;
 
-        public Philosophers(int id, Fork left, Fork right)
+        //objects
+        private Fork leftFork, rightFork;
+
+        //properties
+        public int ID { get { return iD; } set { iD = value; } }
+        public int Eat {  get {  return eat; } set {  eat = value; }  }
+        public int Thought {  get {  return thought; } set {  thought = value; }  }
+        
+
+        public Philosophers(int id, Fork left, Fork right)//constructor for forks
         {
-            this.iD = id;
+            this.ID = id;
             this.leftFork = left;
             this.rightFork = right;
         }
 
-        public void Eat()
+        public void philEat()
         {
             while (true)
             {
 
-                lock (this.leftFork)
+                lock (this.leftFork)//takes leftfork
                 {
-                    if (Monitor.TryEnter(this.rightFork))
+                    if (Monitor.TryEnter(this.rightFork))//if you can take right fork it proceeds to eat
                     {
                         Console.WriteLine($"philosohpher {this.iD} is eating");
                         Thread.Sleep(eat);
 
-                        Monitor.PulseAll(this.leftFork);
-                        Monitor.Exit(this.rightFork);
+                        Monitor.PulseAll(this.leftFork);// releases leftfork
+                        Monitor.Exit(this.rightFork);// releases rightfork
 
-                        think();
+                        think();//proceeds to think
                     }
-                    else
+                    else//if not it releases left fork
                     {
                         Monitor.PulseAll(this.leftFork);
                     }
@@ -45,7 +54,7 @@ namespace Dining_philosophers
             }
         }
 
-        public void think()
+        public void think()// thinks
         {
             Console.WriteLine("Philosopger " + iD + " is Thinking");
             Thread.Sleep(thought);
